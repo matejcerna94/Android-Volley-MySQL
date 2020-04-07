@@ -107,7 +107,6 @@ public class DrinksFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("JEBENA GRESKA", String.valueOf(error));
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                 alertDialog.setMessage("Ups, došlo je do pogreške.").setCancelable(false)
                         .setPositiveButton("U redu", new DialogInterface.OnClickListener() {
