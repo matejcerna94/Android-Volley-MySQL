@@ -37,7 +37,7 @@ public class PocetnaActivity extends AppCompatActivity {
 
     @Nullable
     @BindView(R.id.tabs)
-    TabLayout tab;
+    TabLayout tabLayout;
     @Nullable
     @BindView(R.id.pager)
     ViewPager viewPager;
@@ -46,6 +46,9 @@ public class PocetnaActivity extends AppCompatActivity {
     // Title List
     private final List<String> categories = new ArrayList<>();
     String string_table_id;
+    CategoriesPagerAdapter adapter;
+    String ime_kategorije;
+    String ime_kategorijee;
 
 
     @Override
@@ -55,29 +58,14 @@ public class PocetnaActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        int position = getIntent().getExtras().getInt("key");
+        final int position = getIntent().getExtras().getInt("key");
         string_table_id = tablesList.get(position).getTable_id();
         Log.d("KOD", string_table_id);
 
+
         fetchCategories();
 
-        tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
 
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 
 
     }
@@ -120,20 +108,42 @@ public class PocetnaActivity extends AppCompatActivity {
                 for (int i = 0; i < categoryList.size(); i++) {
                     Category category = (Category) categoryList.get(i);
                     categories.add(category.getCategory_name());
-                    tab.addTab(tab.newTab().setText(category.getCategory_name()));
+                    tabLayout.addTab(tabLayout.newTab().setText(category.getCategory_name()));
 
                 }
 
-                CategoriesPagerAdapter adapter = new CategoriesPagerAdapter(getSupportFragmentManager(), categoryList, categories);
+                adapter = new CategoriesPagerAdapter(getSupportFragmentManager(), categoryList, categories);
                 viewPager.setAdapter(adapter);
                 viewPager.setOffscreenPageLimit(1);
-                viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
+                viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+                ime_kategorije = (String) adapter.getPageTitle(viewPager.getCurrentItem());
+                Log.d("POZCIja", ime_kategorije);
 //Bonus Code : If your tab layout has more than 2 tabs then tab will scroll other wise they will take whole width of the screen
-                if (tab.getTabCount() == 2) {
-                    tab.setTabMode(TabLayout.MODE_FIXED);
+                if (tabLayout.getTabCount() == 2) {
+                    tabLayout.setTabMode(TabLayout.MODE_FIXED);
                 } else {
-                    tab.setTabMode(TabLayout.MODE_SCROLLABLE);
+                    tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
                 }
+
+                tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        viewPager.setCurrentItem(tab.getPosition());
+                        ime_kategorije = (String) adapter.getPageTitle(viewPager.getCurrentItem());
+                        Log.d("POZCI", ime_kategorije);
+
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+
+                    }
+                });
 
 
             }

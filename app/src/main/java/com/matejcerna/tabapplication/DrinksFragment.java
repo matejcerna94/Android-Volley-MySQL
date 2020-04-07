@@ -18,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -40,6 +41,7 @@ public class DrinksFragment extends Fragment {
     @BindView(R.id.recycler_view_drinks)
     RecyclerView recyclerViewDrinks;
     String string_table_id;
+    String kategorija;
 
     private RecyclerViewAdapterCategoryName recyclerViewAdapterCategoryName;
 
@@ -51,20 +53,24 @@ public class DrinksFragment extends Fragment {
         int position = ((PocetnaActivity) getActivity()).getIntent().getExtras().getInt("key");
         string_table_id = tablesList.get(position).getTable_id();
         Log.d("KOD DRINKS TABLE ID", string_table_id);
+        //getActivity();
+        //Log.d("GETMYDATA", kategorija);
+
 
         recyclerViewDrinks.setHasFixedSize(true);
-        recyclerViewDrinks.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        recyclerViewDrinks.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         drinksList = new ArrayList<>();
         fetchCategoryByName();
         return view;
     }
 
+
     private void fetchCategoryByName() {
         String url = "https://low-pressure-lists.000webhostapp.com/try.php";
         final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), null, "Please wait");
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
                     Log.d("CATEGORY_NAME", String.valueOf(response));
@@ -101,6 +107,7 @@ public class DrinksFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("JEBENA GRESKA", String.valueOf(error));
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                 alertDialog.setMessage("Ups, došlo je do pogreške.").setCancelable(false)
                         .setPositiveButton("U redu", new DialogInterface.OnClickListener() {
@@ -120,14 +127,14 @@ public class DrinksFragment extends Fragment {
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                //String category_name = "Drinks";
+                String category_name = "Drinks";
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("category_name", "Drinks");
+                params.put("category_name", category_name);
                 return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(request);
     }
 }
