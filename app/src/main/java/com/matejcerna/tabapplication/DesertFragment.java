@@ -39,7 +39,8 @@ public class DesertFragment extends Fragment {
     static ArrayList<Category_name> desertList;
     @BindView(R.id.recycler_view_desert)
     RecyclerView recyclerViewDesert;
-    String string_table_id;
+    int position;
+    int table_id;
     String category_name="Desert";
 
     private RecyclerViewAdapterCategoryName recyclerViewAdapterCategoryName;
@@ -49,14 +50,14 @@ public class DesertFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_desert, container, false);
         ButterKnife.bind(this, view);
 
-        int position = ((PocetnaActivity) getActivity()).getIntent().getExtras().getInt("key");
-        string_table_id = tablesList.get(position).getTable_id();
-        Log.d("KOD DESERT TABLE ID", string_table_id);
+        position = PocetnaActivity.position;
+        table_id = Integer.parseInt(tablesList.get(position).getTable_id());
+        Log.d("KOD DESERT TABLE ID", String.valueOf(table_id));
 
 
 
         recyclerViewDesert.setHasFixedSize(true);
-        recyclerViewDesert.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        recyclerViewDesert.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         desertList = new ArrayList<>();
         fetchCategoryByName();
 

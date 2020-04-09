@@ -40,7 +40,8 @@ public class DrinksFragment extends Fragment {
     static ArrayList<Category_name> drinksList;
     @BindView(R.id.recycler_view_drinks)
     RecyclerView recyclerViewDrinks;
-    String string_table_id;
+    int position;
+    int table_id;
     String category_name="Drinks";
 
     private RecyclerViewAdapterCategoryName recyclerViewAdapterCategoryName;
@@ -50,15 +51,14 @@ public class DrinksFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_drinks, container, false);
         ButterKnife.bind(this, view);
 
-        int position = ((PocetnaActivity) getActivity()).getIntent().getExtras().getInt("key");
-        string_table_id = tablesList.get(position).getTable_id();
-        Log.d("KOD DRINKS TABLE ID", string_table_id);
-        //kategorija=((PocetnaActivity) getActivity()).ime_kategorije;
-        //Log.d("GETMYDATA", kategorija);
+
+        position = PocetnaActivity.position;
+        table_id = Integer.parseInt(tablesList.get(position).getTable_id());
+        Log.d("KOD DRINKS TABLE ID", String.valueOf(table_id));
 
 
         recyclerViewDrinks.setHasFixedSize(true);
-        recyclerViewDrinks.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        recyclerViewDrinks.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         drinksList = new ArrayList<>();
         fetchCategoryByName();
         return view;

@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 
 public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<RecyclerViewAdapterCategoryName.ViewHolder> {
     private Context context;
-    private ArrayList<Category_name> category_nameList;
+    public static ArrayList<Category_name> itemsList;
     private OnItemClickListener mlistener;
 
     public interface OnItemClickListener {
@@ -34,9 +34,9 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
         mlistener = listener;
     }
 
-    public RecyclerViewAdapterCategoryName(Context context, ArrayList<Category_name> categoryNameList) {
+    public RecyclerViewAdapterCategoryName(Context context, ArrayList<Category_name> itemsList) {
         this.context = context;
-        this.category_nameList = categoryNameList;
+        this.itemsList = itemsList;
     }
 
     @NonNull
@@ -48,20 +48,25 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final Category_name category_name = category_nameList.get(position);
+        final Category_name category_name = itemsList.get(position);
 
-        String itemName = category_name.getItem_name();
-        String image = category_name.getItem_image();
+        final String itemId=category_name.getItem_id();
+        final String itemName = category_name.getItem_name();
+        final String itemImage = category_name.getItem_image();
+        final String categoryName = category_name.getCategory_name();
+
 
         holder.textViewItemName.setText(itemName);
-        Picasso.get().load(image).fit().centerCrop().into(holder.imageViewCategory);
+        Picasso.get().load(itemImage).fit().centerCrop().into(holder.imageViewCategory);
 
         holder.orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Category_name categoryName = category_nameList.get(position);
                 Intent intent = new Intent(context, NarudzbaActivity.class);
-                intent.putExtra("key", position);
+                intent.putExtra("item_id", itemId);
+                intent.putExtra("item_name", itemName);
+                intent.putExtra("item_image", itemImage);
+                intent.putExtra("item_category", categoryName);
                 context.startActivity(intent);
             }
         });
@@ -69,7 +74,7 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemCount() {
-        return category_nameList.size();
+        return itemsList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

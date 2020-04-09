@@ -45,9 +45,10 @@ public class PocetnaActivity extends AppCompatActivity {
     private ArrayList<Category> categoryList = new ArrayList<>();
     // Title List
     private ArrayList<String> categories = new ArrayList<>();
-    String string_table_id;
+    public static int table_id;
     CategoriesPagerAdapter adapter;
     String ime_kategorije;
+    public static int position;
 
 
 
@@ -58,9 +59,9 @@ public class PocetnaActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        final int position = getIntent().getExtras().getInt("key");
-        string_table_id = tablesList.get(position).getTable_id();
-        Log.d("KOD", string_table_id);
+        position = getIntent().getExtras().getInt("key_table_position");
+        table_id = Integer.parseInt(tablesList.get(position).getTable_id());
+        Log.d("KOD table id pocetna", String.valueOf(table_id));
 
 
 

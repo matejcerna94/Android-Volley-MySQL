@@ -58,7 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 Table table = tablesList.get(position);
                 Intent intent = new Intent(context, PocetnaActivity.class);
-                intent.putExtra("key", position);
+                intent.putExtra("key_table_position", position);
                 context.startActivity(intent);
             }
         });
