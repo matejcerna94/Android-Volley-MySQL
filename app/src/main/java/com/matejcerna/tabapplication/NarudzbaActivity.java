@@ -16,8 +16,10 @@ public class NarudzbaActivity extends AppCompatActivity {
     String string_item_id;
     String item_name;
     String item_image;
+    String string_item_price;
     String item_category;
     int item_id;
+    int item_price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,8 @@ public class NarudzbaActivity extends AppCompatActivity {
         item_id = Integer.parseInt(string_item_id);
         item_name = getIntent().getExtras().getString("item_name");
         item_image = getIntent().getExtras().getString("item_image");
+        string_item_price = getIntent().getExtras().getString("item_price");
+        item_price = Integer.parseInt(string_item_price);
         item_category = getIntent().getExtras().getString("item_category");
 
         table_id = PocetnaActivity.table_id;

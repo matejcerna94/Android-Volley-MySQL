@@ -53,10 +53,12 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
         final String itemId=category_name.getItem_id();
         final String itemName = category_name.getItem_name();
         final String itemImage = category_name.getItem_image();
+        final String itemPrice = category_name.getItem_price();
         final String categoryName = category_name.getCategory_name();
 
 
         holder.textViewItemName.setText(itemName);
+        holder.textViewItemPrice.setText(itemPrice);
         Picasso.get().load(itemImage).fit().centerCrop().into(holder.imageViewCategory);
 
         holder.orderButton.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +68,7 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
                 intent.putExtra("item_id", itemId);
                 intent.putExtra("item_name", itemName);
                 intent.putExtra("item_image", itemImage);
+                intent.putExtra("item_price", itemPrice);
                 intent.putExtra("item_category", categoryName);
                 context.startActivity(intent);
             }
@@ -84,6 +87,9 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
 
         @BindView(R.id.image_view_category)
         ImageView imageViewCategory;
+
+        @BindView(R.id.text_view_item_price)
+        TextView textViewItemPrice;
 
         @BindView(R.id.order_button)
         Button orderButton;

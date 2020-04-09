@@ -16,6 +16,10 @@ public class Category_name {
     @Expose
     private String item_image;
 
+    @SerializedName("item_price")
+    @Expose
+    private String item_price;
+
     @SerializedName("category_name")
     @Expose
     private String category_name;
@@ -42,6 +46,14 @@ public class Category_name {
 
     public void setItem_image(String item_image) {
         this.item_image = item_image;
+    }
+
+    public String getItem_price() {
+        return item_price;
+    }
+
+    public void setItem_price(String item_price) {
+        this.item_price = item_price;
     }
 
     public String getCategory_name() {
