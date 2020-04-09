@@ -10,12 +10,12 @@ import java.util.List;
 
 public class CategoriesPagerAdapter extends FragmentStatePagerAdapter {
     //int mNumOfTabs;
-    private List<Category> categoryList = new ArrayList<>();
+    private ArrayList<Category> categoryList = new ArrayList<>();
     // Title List
-    private List<String> categories = new ArrayList<>();
+    private ArrayList<String> categories = new ArrayList<>();
     int product_result;
 
-    public CategoriesPagerAdapter(FragmentManager fm, List<Category> categoryList, List<String> categories) {
+    public CategoriesPagerAdapter(FragmentManager fm, ArrayList<Category> categoryList, ArrayList<String> categories) {
         super(fm);
         this.categoryList = categoryList;
         this.categories = categories;

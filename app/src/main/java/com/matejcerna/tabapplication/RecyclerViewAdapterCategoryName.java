@@ -8,7 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -47,18 +51,18 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
         final Category_name category_name = category_nameList.get(position);
 
         String itemName = category_name.getItem_name();
-        String categoryName = category_name.getCategory_name();
+        String image = category_name.getItem_image();
 
         holder.textViewItemName.setText(itemName);
-        holder.textViewCategoryName.setText(categoryName);
+        Picasso.get().load(image).fit().centerCrop().into(holder.imageViewCategory);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Category_name categoryName = category_nameList.get(position);
-                Intent intent = new Intent(context, PocetnaActivity.class);
+                Category_name categoryName = category_nameList.get(position);
+                Intent intent = new Intent(context, NarudzbaActivity.class);
                 intent.putExtra("key", position);
-                context.startActivity(intent);*/
+                context.startActivity(intent);
             }
         });
     }
@@ -72,15 +76,19 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
 
         @BindView(R.id.text_view_item_name)
         TextView textViewItemName;
-        @BindView(R.id.text_view_category_name)
-        TextView textViewCategoryName;
+
+        @BindView(R.id.image_view_category)
+        ImageView imageViewCategory;
+
+        @BindView(R.id.order_button)
+        Button orderButton;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            orderButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mlistener != null) {

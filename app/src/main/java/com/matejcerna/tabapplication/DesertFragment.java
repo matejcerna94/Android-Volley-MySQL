@@ -40,7 +40,7 @@ public class DesertFragment extends Fragment {
     @BindView(R.id.recycler_view_desert)
     RecyclerView recyclerViewDesert;
     String string_table_id;
-    String kategorija;
+    String category_name="Desert";
 
     private RecyclerViewAdapterCategoryName recyclerViewAdapterCategoryName;
 
@@ -56,7 +56,7 @@ public class DesertFragment extends Fragment {
 
 
         recyclerViewDesert.setHasFixedSize(true);
-        recyclerViewDesert.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerViewDesert.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         desertList = new ArrayList<>();
         fetchCategoryByName();
 
@@ -107,7 +107,6 @@ public class DesertFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("JEBENA GRESKA", String.valueOf(error));
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                 alertDialog.setMessage("Ups, došlo je do pogreške.").setCancelable(false)
                         .setPositiveButton("U redu", new DialogInterface.OnClickListener() {
@@ -127,7 +126,7 @@ public class DesertFragment extends Fragment {
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                String category_name = "Desert";
+
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("category_name", category_name);

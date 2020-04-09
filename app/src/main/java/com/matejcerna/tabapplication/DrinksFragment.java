@@ -41,7 +41,7 @@ public class DrinksFragment extends Fragment {
     @BindView(R.id.recycler_view_drinks)
     RecyclerView recyclerViewDrinks;
     String string_table_id;
-    String kategorija;
+    String category_name="Drinks";
 
     private RecyclerViewAdapterCategoryName recyclerViewAdapterCategoryName;
 
@@ -53,12 +53,12 @@ public class DrinksFragment extends Fragment {
         int position = ((PocetnaActivity) getActivity()).getIntent().getExtras().getInt("key");
         string_table_id = tablesList.get(position).getTable_id();
         Log.d("KOD DRINKS TABLE ID", string_table_id);
-        //getActivity();
+        //kategorija=((PocetnaActivity) getActivity()).ime_kategorije;
         //Log.d("GETMYDATA", kategorija);
 
 
         recyclerViewDrinks.setHasFixedSize(true);
-        recyclerViewDrinks.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerViewDrinks.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         drinksList = new ArrayList<>();
         fetchCategoryByName();
         return view;
@@ -126,7 +126,7 @@ public class DrinksFragment extends Fragment {
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                String category_name = "Drinks";
+
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("category_name", category_name);

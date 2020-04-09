@@ -16,7 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,13 +42,13 @@ public class PocetnaActivity extends AppCompatActivity {
     @BindView(R.id.pager)
     ViewPager viewPager;
     // Fragment List
-    private List<Category> categoryList = new ArrayList<>();
+    private ArrayList<Category> categoryList = new ArrayList<>();
     // Title List
-    private final List<String> categories = new ArrayList<>();
+    private ArrayList<String> categories = new ArrayList<>();
     String string_table_id;
     CategoriesPagerAdapter adapter;
     String ime_kategorije;
-    String ime_kategorijee;
+
 
 
     @Override
@@ -63,6 +63,7 @@ public class PocetnaActivity extends AppCompatActivity {
         Log.d("KOD", string_table_id);
 
 
+
         fetchCategories();
 
 
@@ -74,9 +75,9 @@ public class PocetnaActivity extends AppCompatActivity {
     private void fetchCategories() {
         String url = "https://low-pressure-lists.000webhostapp.com/fetch_categories.php";
         final ProgressDialog progressDialog = ProgressDialog.show(this, null, "Please wait");
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
@@ -168,8 +169,8 @@ public class PocetnaActivity extends AppCompatActivity {
             }
         }) {
             @Override
-            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                Response<JSONObject> resp = super.parseNetworkResponse(response);
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                Response<String> resp = super.parseNetworkResponse(response);
                 if (!resp.isSuccess()) {
                     return resp;
                 }
@@ -188,7 +189,7 @@ public class PocetnaActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.getCache().clear();
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(request);
     }
 
 
