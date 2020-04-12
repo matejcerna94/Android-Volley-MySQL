@@ -1,9 +1,12 @@
 package com.matejcerna.tabapplication;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +24,7 @@ import butterknife.ButterKnife;
 
 public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<RecyclerViewAdapterCategoryName.ViewHolder> {
     private Context context;
-    public static ArrayList<Category_name> itemsList;
+    public static ArrayList<Item> itemsList;
     private OnItemClickListener mlistener;
 
     public interface OnItemClickListener {
@@ -34,7 +37,7 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
         mlistener = listener;
     }
 
-    public RecyclerViewAdapterCategoryName(Context context, ArrayList<Category_name> itemsList) {
+    public RecyclerViewAdapterCategoryName(Context context, ArrayList<Item> itemsList) {
         this.context = context;
         this.itemsList = itemsList;
     }
@@ -48,7 +51,7 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final Category_name category_name = itemsList.get(position);
+        final Item category_name = itemsList.get(position);
 
         final String itemId=category_name.getItem_id();
         final String itemName = category_name.getItem_name();
@@ -64,16 +67,30 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
         holder.orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, NarudzbaActivity.class);
+               /* Intent intent = new Intent(context, NarudzbaActivity.class);
                 intent.putExtra("item_id", itemId);
                 intent.putExtra("item_name", itemName);
                 intent.putExtra("item_image", itemImage);
                 intent.putExtra("item_price", itemPrice);
                 intent.putExtra("item_category", categoryName);
-                context.startActivity(intent);
+                context.startActivity(intent);*/
+               openDialog(itemId, itemName, itemImage, itemPrice);
+
             }
         });
     }
+
+    private void openDialog(String item_id, String item_name, String item_image, String item_price) {
+        ExampleDialog exampleDialog = new ExampleDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("item_id", item_id);
+        bundle.putString("item_name", item_name);
+        bundle.putString("item_image", item_image);
+        bundle.putString("item_price", item_price);
+        exampleDialog.setArguments(bundle);
+        exampleDialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "tag");
+    }
+
 
     @Override
     public int getItemCount() {

@@ -3,7 +3,7 @@ package com.matejcerna.tabapplication;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Category_name {
+public class Item {
     @SerializedName("item_id")
     @Expose
     private String item_id;

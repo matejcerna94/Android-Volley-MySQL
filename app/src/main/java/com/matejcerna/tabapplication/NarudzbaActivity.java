@@ -1,14 +1,12 @@
 package com.matejcerna.tabapplication;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.matejcerna.tabapplication.RecyclerViewAdapterCategoryName.itemsList;
-import static com.matejcerna.tabapplication.TableActivity.tablesList;
 
 public class NarudzbaActivity extends AppCompatActivity {
 
@@ -20,6 +18,8 @@ public class NarudzbaActivity extends AppCompatActivity {
     String item_category;
     int item_id;
     int item_price;
+    @BindView(R.id.order_item_name)
+    TextView orderItemName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,5 +41,11 @@ public class NarudzbaActivity extends AppCompatActivity {
         Log.d("kod item name narudzba", item_name);
         Log.d("kod item image narudzba", item_image);
         Log.d("kod item categ narudzba", item_category);
+
+        setValues();
+    }
+
+    public void setValues() {
+            orderItemName.setText(item_name);
     }
 }

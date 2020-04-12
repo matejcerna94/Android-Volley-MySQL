@@ -17,7 +17,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -37,7 +36,7 @@ import butterknife.ButterKnife;
 import static com.matejcerna.tabapplication.TableActivity.tablesList;
 
 public class DrinksFragment extends Fragment {
-    static ArrayList<Category_name> drinksList;
+    static ArrayList<Item> drinksList;
     @BindView(R.id.recycler_view_drinks)
     RecyclerView recyclerViewDrinks;
     int position;
@@ -90,9 +89,9 @@ public class DrinksFragment extends Fragment {
                     e.printStackTrace();
                 }
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    Category_name categoryName = null;
+                    Item categoryName = null;
                     try {
-                        categoryName = gson.fromJson(jsonArray.get(i).toString(), Category_name.class);
+                        categoryName = gson.fromJson(jsonArray.get(i).toString(), Item.class);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -100,7 +99,7 @@ public class DrinksFragment extends Fragment {
                 }
 
 
-                recyclerViewAdapterCategoryName = new RecyclerViewAdapterCategoryName(getActivity(), (ArrayList<Category_name>) drinksList);
+                recyclerViewAdapterCategoryName = new RecyclerViewAdapterCategoryName(getActivity(), (ArrayList<Item>) drinksList);
                 recyclerViewDrinks.setAdapter(recyclerViewAdapterCategoryName);
 
             }

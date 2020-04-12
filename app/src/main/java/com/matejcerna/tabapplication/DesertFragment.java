@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 import static com.matejcerna.tabapplication.TableActivity.tablesList;
 
 public class DesertFragment extends Fragment {
-    static ArrayList<Category_name> desertList;
+    static ArrayList<Item> desertList;
     @BindView(R.id.recycler_view_desert)
     RecyclerView recyclerViewDesert;
     int position;
@@ -91,9 +91,9 @@ public class DesertFragment extends Fragment {
                     e.printStackTrace();
                 }
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    Category_name categoryName = null;
+                    Item categoryName = null;
                     try {
-                        categoryName = gson.fromJson(jsonArray.get(i).toString(), Category_name.class);
+                        categoryName = gson.fromJson(jsonArray.get(i).toString(), Item.class);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -101,7 +101,7 @@ public class DesertFragment extends Fragment {
                 }
 
 
-                recyclerViewAdapterCategoryName = new RecyclerViewAdapterCategoryName(getActivity(), (ArrayList<Category_name>) desertList);
+                recyclerViewAdapterCategoryName = new RecyclerViewAdapterCategoryName(getActivity(), (ArrayList<Item>) desertList);
                 recyclerViewDesert.setAdapter(recyclerViewAdapterCategoryName);
 
             }
