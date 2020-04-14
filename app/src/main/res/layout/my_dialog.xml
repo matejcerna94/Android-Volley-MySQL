@@ -6,7 +6,6 @@
     android:gravity="center">
 
     <ImageView
-
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:src="@drawable/ic_close_black_24dp"
@@ -20,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
-        app:cardBackgroundColor="@color/colorOrange"
+        app:cardBackgroundColor="@color/colorWhite"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentLeft="true">
@@ -37,7 +36,18 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="25dp">
 
+                <ImageView
+                    android:id="@+id/item_image"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/stol"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"/>
+
                 <TextView
+                    android:id="@+id/item_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -47,16 +57,10 @@
                     android:textSize="25dp"
                     android:text="Name"/>
 
-                <ImageView
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/stol"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"/>
+
 
                 <TextView
+                    android:id="@+id/item_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
