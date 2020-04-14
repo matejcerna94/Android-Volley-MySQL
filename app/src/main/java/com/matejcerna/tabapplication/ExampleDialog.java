@@ -26,7 +26,7 @@ public class ExampleDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.container, null);
+        View view = inflater.inflate(R.layout.my_dialog, null);
         textViewItemNameDialog = view.findViewById(R.id.text_view_item_name_dialog);
         textViewItemPriceDialog = view.findViewById(R.id.text_view_item_price_dialog);
         imageViewItemImageDialog = view.findViewById(R.id.image_view_item_image_dialog);
