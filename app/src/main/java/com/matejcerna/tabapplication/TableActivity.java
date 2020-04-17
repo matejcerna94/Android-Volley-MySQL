@@ -33,18 +33,28 @@ public class TableActivity extends AppCompatActivity {
     static ArrayList<Table> tablesList;
     @BindView(R.id.recycler_view_tables)
     RecyclerView recyclerViewTables;
-
     private RecyclerViewAdapter recyclerViewAdapter;
+
+    static ArrayList<Table> emptyTablesList;
+    @BindView(R.id.recycler_view_empty_tables)
+    RecyclerView recyclerViewEmptyTables;
+    private EmptyTablesRecyclerAdapter emptyTablesRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table);
         ButterKnife.bind(this);
+
         recyclerViewTables.setHasFixedSize(true);
         recyclerViewTables.setLayoutManager(new GridLayoutManager(this, 3));
         tablesList = new ArrayList<>();
         fetchTables();
+
+        recyclerViewEmptyTables.setHasFixedSize(true);
+        recyclerViewEmptyTables.setLayoutManager(new GridLayoutManager(this, 3));
+        emptyTablesList = new ArrayList<>();
+        fetchEmptyTables();
     }
 
     private void fetchTables() {
@@ -119,6 +129,88 @@ public class TableActivity extends AppCompatActivity {
                     entry.responseHeaders = response.headers;
                 } else {
                     tablesList.clear();
+                }
+                entry.ttl = now + 300 * 1000;  //keeps cache for 5 min
+
+                return Response.success(resp.result, entry);
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+    private void fetchEmptyTables() {
+        String url = "https://low-pressure-lists.000webhostapp.com/fetch_empty_tables.php";
+        final ProgressDialog progressDialog = ProgressDialog.show(this, null, "Please wait");
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                Gson gson = gsonBuilder.create();
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(String.valueOf(response));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = jsonObject.getJSONArray("empty_table");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    Table table = null;
+                    try {
+                        table = gson.fromJson(jsonArray.get(i).toString(), Table.class);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    emptyTablesList.add(table);
+                }
+
+
+                emptyTablesRecyclerAdapter = new EmptyTablesRecyclerAdapter(TableActivity.this, (ArrayList<Table>) emptyTablesList);
+                recyclerViewEmptyTables.setAdapter(emptyTablesRecyclerAdapter);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getApplicationContext());
+                alertDialog.setMessage("Ups, došlo je do pogreške.").setCancelable(false)
+                        .setPositiveButton("U redu", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                progressDialog.dismiss();
+                            }
+
+
+                        });
+                AlertDialog alert = alertDialog.create();
+                alert.setTitle("Greška");
+                alert.show();
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                Response<String> resp = super.parseNetworkResponse(response);
+                if (!resp.isSuccess()) {
+                    return resp;
+                }
+                long now = System.currentTimeMillis();
+                Cache.Entry entry = resp.cacheEntry;
+                if (entry == null) {
+                    entry = new Cache.Entry();
+                    entry.data = response.data;
+                    entry.responseHeaders = response.headers;
+                } else {
+                    emptyTablesList.clear();
                 }
                 entry.ttl = now + 300 * 1000;  //keeps cache for 5 min
 

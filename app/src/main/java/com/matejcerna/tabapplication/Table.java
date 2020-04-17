@@ -8,13 +8,17 @@ public class Table {
     @Expose
     private String table_id;
 
-    @SerializedName("table_name")
+    @SerializedName("table_number")
     @Expose
-    private String table_name;
+    private String table_number;
 
     @SerializedName("table_capacity")
     @Expose
     private String table_capacity;
+
+    @SerializedName("table_availability")
+    @Expose
+    private String table_availability;
 
     public String getTable_id() {
         return table_id;
@@ -25,11 +29,11 @@ public class Table {
     }
 
     public String getTable_name() {
-        return table_name;
+        return table_number;
     }
 
     public void setTable_name(String table_name) {
-        this.table_name = table_name;
+        this.table_number = table_name;
     }
 
     public String getTable_capacity() {
@@ -38,5 +42,13 @@ public class Table {
 
     public void setTable_capacity(String table_capacity) {
         this.table_capacity = table_capacity;
+    }
+
+    public String getTable_availability() {
+        return table_availability;
+    }
+
+    public void setTable_availability(String table_availability) {
+        this.table_availability = table_availability;
     }
 }

@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class EmptyTablesRecyclerAdapter extends RecyclerView.Adapter<EmptyTablesRecyclerAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<Table> tablesList;
+    private ArrayList<Table> emptyTablesList;
     private OnItemClickListener mlistener;
 
     public interface OnItemClickListener {
@@ -31,9 +31,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mlistener = listener;
     }
 
-    public RecyclerViewAdapter(Context context, ArrayList<Table> tablesList) {
+    public EmptyTablesRecyclerAdapter(Context context, ArrayList<Table> emptyTablesList) {
         this.context = context;
-        this.tablesList = tablesList;
+        this.emptyTablesList = emptyTablesList;
     }
 
     @NonNull
@@ -45,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final Table currentTable = tablesList.get(position);
+        final Table currentTable = emptyTablesList.get(position);
 
         String tableName = currentTable.getTable_name();
         String tableCapacity = currentTable.getTable_capacity();
@@ -56,17 +56,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Table table = tablesList.get(position);
+                Table table = emptyTablesList.get(position);
                 Intent intent = new Intent(context, PocetnaActivity.class);
-                intent.putExtra("key_table_position", position);
-                context.startActivity(intent);*/
+                intent.putExtra("key_empty_table_position", position);
+                context.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return tablesList.size();
+        return emptyTablesList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
