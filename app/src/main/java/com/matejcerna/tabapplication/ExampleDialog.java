@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +33,17 @@ public class ExampleDialog extends DialogFragment {
     ImageView itemImage;
     @BindView(R.id.item_price)
     TextView itemPrice;
-    Unbinder unbinder;
+    @BindView(R.id.edit_text_note)
+    EditText editTextNote;
+    Unbinder unbinder1;
+    @BindView(R.id.text_view_amount)
+    TextView textViewAmount;
+    int amount = 1;
+    @BindView(R.id.minus_button)
+    Button minusButton;
+    @BindView(R.id.plus_button)
+    Button plusButton;
+    int table_id;
 
     @NonNull
     @Override
@@ -43,10 +55,6 @@ public class ExampleDialog extends DialogFragment {
         ButterKnife.bind(this, view);
 
 
-       /* textViewItemNameDialog = view.findViewById(R.id.text_view_item_name_dialog);
-        textViewItemPriceDialog = view.findViewById(R.id.text_view_item_price_dialog);
-        imageViewItemImageDialog = view.findViewById(R.id.image_view_item_image_dialog);*/
-
         Bundle bundle = getArguments();
         String item_id = bundle.getString("item_id");
         String item_name = bundle.getString("item_name");
@@ -56,6 +64,26 @@ public class ExampleDialog extends DialogFragment {
         itemName.setText(item_name);
         itemPrice.setText(item_price);
         Picasso.get().load(item_image).fit().centerInside().into(itemImage);
+        table_id = PocetnaActivity.table_id;
+        Log.d("kod table id dialog", String.valueOf(table_id));
+        Log.d("kod item id dialog", String.valueOf(item_id));
+
+        minusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                amount--;
+                textViewAmount.setText(String.valueOf(amount));
+            }
+        });
+
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                amount++;
+                textViewAmount.setText(String.valueOf(amount));
+            }
+        });
+
 
         alert.setView(view);
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -66,11 +94,18 @@ public class ExampleDialog extends DialogFragment {
     }
 
 
-
-
-
     @OnClick(R.id.image_view_close)
     public void onViewClicked() {
         dismiss();
+    }
+
+
+    @OnClick(R.id.cancel_button)
+    public void onCancelButtonClicked() {
+        dismiss();
+    }
+
+    @OnClick(R.id.order_button)
+    public void onOrderButtonClicked() {
     }
 }

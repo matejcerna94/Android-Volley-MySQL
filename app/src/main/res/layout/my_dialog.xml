@@ -103,9 +103,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/amount"
                 android:id="@+id/text_view_amount"
-                android:text="5"
+                android:text="1"
                 android:textSize="25dp"
-                android:layout_width="25dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"/>
 
             <Button
@@ -133,7 +133,6 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:id="@+id/edit_text_note"
-                android:textColor="@color/colorWhite"
                 android:hint="Enter note if needed"
                 android:layout_below="@id/note"
                 android:layout_width="match_parent"
@@ -142,6 +141,7 @@
 
 
                     <Button
+                        android:id="@+id/cancel_button"
                         android:layout_marginStart="10dp"
                         android:layout_alignParentLeft="true"
                         android:layout_below="@id/edit_text_note"
@@ -150,6 +150,7 @@
                         android:layout_height="wrap_content"/>
 
                     <Button
+                        android:id="@+id/order_button"
                         android:layout_marginEnd="10dp"
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/edit_text_note"
