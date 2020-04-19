@@ -62,7 +62,7 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
 
         holder.textViewItemName.setText(itemName);
         holder.textViewItemPrice.setText(itemPrice);
-        Picasso.get().load(itemImage).fit().centerInside().into(holder.imageViewCategory);
+        Picasso.get().load(itemImage).fit().centerCrop().into(holder.imageViewCategory);
 
         holder.orderButton.setOnClickListener(new View.OnClickListener() {
             @Override

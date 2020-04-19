@@ -56,10 +56,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Table table = tablesList.get(position);
+                Table table = tablesList.get(position);
                 Intent intent = new Intent(context, PocetnaActivity.class);
                 intent.putExtra("key_table_position", position);
-                context.startActivity(intent);*/
+                context.startActivity(intent);
             }
         });
     }

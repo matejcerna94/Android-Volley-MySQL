@@ -168,28 +168,8 @@ public class PocetnaActivity extends AppCompatActivity {
                 alert.show();
                 error.printStackTrace();
             }
-        }) {
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                Response<String> resp = super.parseNetworkResponse(response);
-                if (!resp.isSuccess()) {
-                    return resp;
-                }
-                long now = System.currentTimeMillis();
-                Cache.Entry entry = resp.cacheEntry;
-                if (entry == null) {
-                    categoryList.clear();
-                    entry = new Cache.Entry();
-                    entry.data = response.data;
-                    entry.responseHeaders = response.headers;
-                }
-                entry.ttl = now + 300 * 1000;  //keeps cache for 5 min
-
-                return Response.success(resp.result, entry);
-            }
-        };
+        });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.getCache().clear();
         requestQueue.add(request);
     }
 

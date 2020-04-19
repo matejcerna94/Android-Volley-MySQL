@@ -1,6 +1,8 @@
 package com.matejcerna.tabapplication;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,6 +37,7 @@ public class ExampleDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog alert = builder.create();
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.my_dialog, null);
         ButterKnife.bind(this, view);
@@ -54,9 +57,10 @@ public class ExampleDialog extends DialogFragment {
         itemPrice.setText(item_price);
         Picasso.get().load(item_image).fit().centerInside().into(itemImage);
 
-        builder.setView(view);
+        alert.setView(view);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        return builder.create();
+        return alert;
 
 
     }
