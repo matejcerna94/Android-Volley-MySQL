@@ -16,8 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +39,6 @@ public class ExampleDialog extends DialogFragment {
     TextView itemPrice;
     @BindView(R.id.edit_text_note)
     EditText editTextNote;
-    Unbinder unbinder1;
     @BindView(R.id.text_view_amount)
     TextView textViewAmount;
     int amount = 1;
@@ -44,6 +47,7 @@ public class ExampleDialog extends DialogFragment {
     @BindView(R.id.plus_button)
     Button plusButton;
     int table_id;
+
 
     @NonNull
     @Override
@@ -59,7 +63,6 @@ public class ExampleDialog extends DialogFragment {
         String item_id = bundle.getString("item_id");
         String item_name = bundle.getString("item_name");
         String item_image = bundle.getString("item_image");
-        Log.d("image dialog", item_image);
         String item_price = bundle.getString("item_price");
         itemName.setText(item_name);
         itemPrice.setText(item_price);
@@ -68,17 +71,25 @@ public class ExampleDialog extends DialogFragment {
         Log.d("kod table id dialog", String.valueOf(table_id));
         Log.d("kod item id dialog", String.valueOf(item_id));
 
+        minusButton.setEnabled(false);
+
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                amount--;
-                textViewAmount.setText(String.valueOf(amount));
+                if(amount==1){
+                    minusButton.setEnabled(false);
+                }else{
+                    amount--;
+                    textViewAmount.setText(String.valueOf(amount));
+                }
+
             }
         });
 
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                minusButton.setEnabled(true);
                 amount++;
                 textViewAmount.setText(String.valueOf(amount));
             }
@@ -87,7 +98,6 @@ public class ExampleDialog extends DialogFragment {
 
         alert.setView(view);
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
         return alert;
 
 
@@ -105,7 +115,14 @@ public class ExampleDialog extends DialogFragment {
         dismiss();
     }
 
-    @OnClick(R.id.order_button)
+    @OnClick(R.id.order_button_dialog)
     public void onOrderButtonClicked() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        String date_and_time = simpleDateFormat.format(calendar.getTime());
+        // formattedDate have current date/time
+        Toast.makeText(getContext(), date_and_time, Toast.LENGTH_SHORT).show();
     }
+
+
 }
