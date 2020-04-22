@@ -49,6 +49,7 @@ public class PocetnaActivity extends AppCompatActivity {
     CategoriesPagerAdapter adapter;
     String ime_kategorije;
     public static int position;
+    public static String table_name;
 
 
 
@@ -61,6 +62,7 @@ public class PocetnaActivity extends AppCompatActivity {
 
         position = getIntent().getExtras().getInt("key_table_position");
         table_id = Integer.parseInt(tablesList.get(position).getTable_id());
+        table_name = tablesList.get(position).getTable_name();
         Log.d("KOD table id pocetna", String.valueOf(table_id));
 
 

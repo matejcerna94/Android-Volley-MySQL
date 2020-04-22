@@ -29,9 +29,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:gravity="center"
+                android:text="Table name"
+                android:id="@+id/text_view_table_name_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
 
 
                 <ImageView
+                    android:layout_below="@id/text_view_table_name_dialog"
                     android:layout_marginTop="10dp"
                     android:id="@+id/item_image"
                     android:layout_gravity="center_horizontal"
