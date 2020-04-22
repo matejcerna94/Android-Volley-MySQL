@@ -23,4 +23,7 @@ public class FinishOrderActivity extends AppCompatActivity {
         Log.d("KOD table id finish", String.valueOf(table_id));
         Log.d("KOD table name finish", table_name);
     }
+
+
+
 }

@@ -66,7 +66,7 @@ public class ExampleDialog extends DialogFragment {
     String date_and_time;
     String note = "";
     String table_availability="";
-    int int_order_price;
+    int single_item_price;
     int order_price;
     String table_name;
     @BindView(R.id.text_view_table_name_dialog)
@@ -94,8 +94,8 @@ public class ExampleDialog extends DialogFragment {
 
         textViewTableNameDialog.setText(table_name);
         itemName.setText(item_name);
-        int_order_price = Integer.parseInt(string_item_price);
-        order_price = int_order_price * amount;
+        single_item_price = Integer.parseInt(string_item_price);
+        order_price = single_item_price * amount;
         itemPrice.setText(String.valueOf(order_price));
         Picasso.get().load(item_image).fit().centerInside().into(itemImage);
 
@@ -104,6 +104,7 @@ public class ExampleDialog extends DialogFragment {
         Log.d("kod table id dialog", String.valueOf(table_id));
         Log.d("kod item id dialog", string_item_id);
         Log.d("kod tablename dialog", table_name);
+
 
         minusButton.setEnabled(false);
 
@@ -115,8 +116,8 @@ public class ExampleDialog extends DialogFragment {
                 } else {
                     amount--;
                     textViewAmount.setText(String.valueOf(amount));
-                    int_order_price = Integer.parseInt(string_item_price);
-                    order_price = int_order_price * amount;
+                    single_item_price = Integer.parseInt(string_item_price);
+                    order_price = single_item_price * amount;
                     itemPrice.setText(String.valueOf(order_price));
                 }
 
@@ -129,8 +130,8 @@ public class ExampleDialog extends DialogFragment {
                 minusButton.setEnabled(true);
                 amount++;
                 textViewAmount.setText(String.valueOf(amount));
-                int_order_price = Integer.parseInt(string_item_price);
-                order_price = int_order_price * amount;
+                single_item_price = Integer.parseInt(string_item_price);
+                order_price = single_item_price * amount;
                 itemPrice.setText(String.valueOf(order_price));
             }
         });
@@ -162,6 +163,7 @@ public class ExampleDialog extends DialogFragment {
     }
 
     private void saveOrder() {
+        Log.d("POJEDINACNA CIJENA", String.valueOf(single_item_price));
         note = editTextNote.getText().toString();
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
@@ -198,6 +200,7 @@ public class ExampleDialog extends DialogFragment {
                 params.put("item_name", item_name);
                 params.put("item_image", item_image);
                 params.put("amount", String.valueOf(amount));
+                params.put("single_item_price", String.valueOf(single_item_price));
                 params.put("order_price", String.valueOf(order_price));
                 params.put("note", note);
                 params.put("order_date_and_time", date_and_time);
