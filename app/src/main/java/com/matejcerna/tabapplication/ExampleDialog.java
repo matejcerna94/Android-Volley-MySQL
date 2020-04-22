@@ -65,6 +65,7 @@ public class ExampleDialog extends DialogFragment {
     String string_item_price;
     String date_and_time;
     String note = "";
+    String table_availability="";
     int int_order_price;
     int order_price;
     String table_name;
@@ -157,6 +158,7 @@ public class ExampleDialog extends DialogFragment {
     @OnClick(R.id.order_button_dialog)
     public void onOrderButtonClicked() {
         saveOrder();
+        changeTableAvailability();
     }
 
     private void saveOrder() {
@@ -202,6 +204,42 @@ public class ExampleDialog extends DialogFragment {
                 params.put("item_id", string_item_id);
                 params.put("table_id", String.valueOf(table_id));
 
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(request);
+
+    }
+
+    private void changeTableAvailability() {
+        table_availability="No";
+
+        String change_url = "https://low-pressure-lists.000webhostapp.com/change_table_availability.php";
+        StringRequest request = new StringRequest(Request.Method.POST, change_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.contains("success")) {
+                    Toast.makeText(getContext(), "Item saved!", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("table_id", String.valueOf(table_id));
+                params.put("table_availability", table_availability);
                 return params;
             }
         };
