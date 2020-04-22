@@ -9,7 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -49,9 +52,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         String tableName = currentTable.getTable_name();
         String tableCapacity = currentTable.getTable_capacity();
+        String tableAvailability = currentTable.getTable_availability();
+
 
         holder.textViewTableName.setText(tableName);
         holder.textViewTableCapacity.setText(tableCapacity);
+        Picasso.get().load(R.drawable.stol_zeleni).fit().centerCrop().into(holder.imageViewTable);
+
+        if(tableAvailability.equals("No")){
+            Picasso.get().load(R.drawable.stol_crveni).fit().centerCrop().into(holder.imageViewTable);
+        }
+
+
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +74,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Intent intent = new Intent(context, PocetnaActivity.class);
                 intent.putExtra("key_table_position", position);
                 context.startActivity(intent);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Intent intent = new Intent(context, FinishOrderActivity.class);
+                intent.putExtra("key_table_position_finish_order", position);
+                context.startActivity(intent);
+                return false;
             }
         });
     }
@@ -75,6 +99,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView textViewTableName;
         @BindView(R.id.text_view_table_capacity)
         TextView textViewTableCapacity;
+        @BindView(R.id.image_view_table)
+        ImageView imageViewTable;
 
 
         public ViewHolder(@NonNull View itemView) {

@@ -23,7 +23,7 @@
             android:id="@+id/image_view_table"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:srcCompat="@drawable/stol" />
+            android:src="@drawable/ic_done_black_24dp" />
 
         <TextView
             android:id="@+id/text_view_table_name"

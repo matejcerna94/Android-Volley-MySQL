@@ -3,6 +3,7 @@ package com.matejcerna.tabapplication;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -176,4 +177,10 @@ public class PocetnaActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(PocetnaActivity.this, TableActivity.class);
+        startActivity(intent);
+    }
 }
