@@ -43,6 +43,8 @@ public class FinishOrderActivity extends AppCompatActivity {
     @BindView(R.id.text_view_order_total)
     TextView textViewOrderTotal;
 
+    ArrayList<OrderTotal> orderTotals;
+
     private RecyclerViewAdapterOrders recyclerViewAdapterOrders;
 
     @Override
@@ -60,6 +62,7 @@ public class FinishOrderActivity extends AppCompatActivity {
         recyclerViewOrders.setHasFixedSize(true);
         recyclerViewOrders.setLayoutManager(new LinearLayoutManager(this));
         ordersList = new ArrayList<>();
+        orderTotals = new ArrayList<>();
         fetchOrdersForSingleTable();
         fetchOrderTotal();
     }
@@ -72,9 +75,35 @@ public class FinishOrderActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
-                    Log.d("SUM_TOTAL", String.valueOf(response));
-                    textViewOrderTotal.setText(response.toString());
+                    Log.d("ORDERTOTAL", String.valueOf(response));
                 }
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                Gson gson = gsonBuilder.create();
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(String.valueOf(response));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = jsonObject.getJSONArray("sum");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    OrderTotal orderTotal = null;
+                    try {
+                        orderTotal = gson.fromJson(jsonArray.get(i).toString(), OrderTotal.class);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    orderTotals.add(orderTotal);
+                    String total = orderTotals.get(i).getOrder_price();
+                    textViewOrderTotal.setText(total);
+                    Log.d("ORDERTOTAL2", total);
+                }
+
 
             }
         }, new Response.ErrorListener() {

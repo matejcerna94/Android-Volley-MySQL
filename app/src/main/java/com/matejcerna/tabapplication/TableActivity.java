@@ -111,4 +111,10 @@ public class TableActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+        System.exit(0);
+    }
 }

@@ -65,7 +65,7 @@ public class RecyclerViewAdapterOrders extends RecyclerView.Adapter<RecyclerView
         holder.textViewOrderPrice.setText(order_price);
         holder.textViewOrderNote.setText(order_note);
         holder.textViewOrderDateAndTime.setText(order_date_and_time);
-        Picasso.get().load(order_image).fit().centerInside().into(holder.imageViewOrderItem);
+        Picasso.get().load(order_image).fit().centerCrop().into(holder.imageViewOrderItem);
 
     }
 
