@@ -3,6 +3,7 @@ package com.matejcerna.tabapplication;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -56,6 +58,7 @@ public class FinishOrderActivity extends AppCompatActivity {
     int refund;
     int cash_amount;
     String string_cash_amount;
+    String table_availability="";
 
     private RecyclerViewAdapterOrders recyclerViewAdapterOrders;
 
@@ -266,6 +269,118 @@ public class FinishOrderActivity extends AppCompatActivity {
 
     @OnClick(R.id.finish_order_button)
     public void onViewClicked() {
+        showDialog();
+        changeTableAvailability();
+        Intent intent = new Intent(FinishOrderActivity.this, TableActivity.class);
+        startActivity(intent);
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Finish orders for " + table_name + "?");
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        deleteOrder();
+                    }
+                });
+
+        builder.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void deleteOrder() {
+        String url = "https://low-pressure-lists.000webhostapp.com/delete_orders.php";
+        final ProgressDialog progressDialog = ProgressDialog.show(this, null, "Please wait");
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                    Log.d("ERROR", String.valueOf(response));
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERRRRRRR", String.valueOf(error));
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(FinishOrderActivity.this);
+                alertDialog.setMessage("Ups, došlo je do pogreške.").setCancelable(false)
+                        .setPositiveButton("U redu", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                progressDialog.dismiss();
+                            }
+
+
+                        });
+                AlertDialog alert = alertDialog.create();
+                alert.setTitle("Greška");
+                alert.show();
+                error.printStackTrace();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("table_id", String.valueOf(table_id));
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+
+    private void changeTableAvailability() {
+        table_availability="Yes";
+
+        String change_url = "https://low-pressure-lists.000webhostapp.com/change_table_availability.php";
+        StringRequest request = new StringRequest(Request.Method.POST, change_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.contains("success")) {
+                    Toast.makeText(FinishOrderActivity.this, "Item saved!", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(FinishOrderActivity.this, response, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(FinishOrderActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("table_id", String.valueOf(table_id));
+                params.put("table_availability", table_availability);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
 
     }
 }
