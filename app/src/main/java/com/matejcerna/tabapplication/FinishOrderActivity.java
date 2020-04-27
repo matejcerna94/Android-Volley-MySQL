@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -30,6 +33,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.matejcerna.tabapplication.TableActivity.tablesList;
 
@@ -44,6 +48,14 @@ public class FinishOrderActivity extends AppCompatActivity {
     TextView textViewOrderTotal;
 
     ArrayList<OrderTotal> orderTotals;
+    @BindView(R.id.edit_text_enter_cash_amount)
+    EditText editTextEnterCashAmount;
+    @BindView(R.id.text_view_refund)
+    TextView textViewRefund;
+    String string_total;
+    int refund;
+    int cash_amount;
+    String string_cash_amount;
 
     private RecyclerViewAdapterOrders recyclerViewAdapterOrders;
 
@@ -58,6 +70,8 @@ public class FinishOrderActivity extends AppCompatActivity {
         table_name = tablesList.get(position).getTable_name();
         Log.d("KOD table id finish", String.valueOf(table_id));
         Log.d("KOD table name finish", table_name);
+        getSupportActionBar().setTitle("Orders for " + table_name);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerViewOrders.setHasFixedSize(true);
         recyclerViewOrders.setLayoutManager(new LinearLayoutManager(this));
@@ -65,6 +79,13 @@ public class FinishOrderActivity extends AppCompatActivity {
         orderTotals = new ArrayList<>();
         fetchOrdersForSingleTable();
         fetchOrderTotal();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+
     }
 
     private void fetchOrderTotal() {
@@ -99,9 +120,40 @@ public class FinishOrderActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     orderTotals.add(orderTotal);
-                    String total = orderTotals.get(i).getOrder_price();
-                    textViewOrderTotal.setText(total);
-                    Log.d("ORDERTOTAL2", total);
+                    string_total = orderTotals.get(i).getOrder_price();
+                    textViewOrderTotal.setText(string_total);
+
+                    editTextEnterCashAmount.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            int total = Integer.parseInt(string_total);
+                            string_cash_amount = editTextEnterCashAmount.getText().toString().trim();
+                            if (string_cash_amount.length() > 0) {
+                                cash_amount = Integer.valueOf(string_cash_amount);
+
+
+                            }
+
+                            refund = cash_amount - total;
+
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            if (string_cash_amount.length() <= 0) {
+                                refund = 0;
+                            }
+                            textViewRefund.setText(String.valueOf(refund));
+                        }
+                    });
+
+
                 }
 
 
@@ -212,4 +264,8 @@ public class FinishOrderActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
+    @OnClick(R.id.finish_order_button)
+    public void onViewClicked() {
+
+    }
 }

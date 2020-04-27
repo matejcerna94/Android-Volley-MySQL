@@ -4,34 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FinishOrderActivity">
+    tools:context=".FinishOrderActivity"
+    android:background="@color/colorPrimary">
 
     <android.support.v7.widget.CardView
-        app:cardCornerRadius="5dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/card_view_finish_order"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:cardCornerRadius="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <EditText
+                android:inputType="number"
+                android:id="@+id/edit_text_enter_cash_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_order_total"
+                android:hint="Enter cash amount" />
+
             <TextView
-                android:layout_toStartOf="@id/text_view_order_total"
-                android:text="Total to pay: "
-                android:id="@+id/text_total_to_pay"
+                android:text="$"
+                android:layout_below="@id/text_view_order_total"
+                android:layout_toStartOf="@id/text_view_refund"
+                android:id="@+id/text_dollar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+            <TextView
+                android:id="@+id/text_view_refund"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_order_total"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="5dp"
+                android:text="0" />
+
+            <TextView
+                android:layout_toStartOf="@id/text_dollar"
+                android:id="@+id/text_refund"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_total_to_pay"
+                android:text="Refund: " />
+
+            <TextView
+                android:id="@+id/text_total_to_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toStartOf="@id/text_view_order_total"
+                android:text="Total to pay: " />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/text_view_order_total"
+                android:text="$" />
 
 
-    <TextView
-        android:layout_marginEnd="5dp"
-        android:layout_alignParentRight="true"
-        android:id="@+id/text_view_order_total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ORDER TOTAL" />
+            <TextView
+                android:id="@+id/text_view_order_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="5dp"
+                android:text="ORDER TOTAL" />
+
+            <Button
+                android:layout_below="@id/text_dollar"
+                android:layout_alignParentRight="true"
+                android:text="Finish"
+                android:id="@+id/finish_order_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
 
@@ -42,7 +93,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/card_view_finish_order" />
-
 
 
 </RelativeLayout>

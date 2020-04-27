@@ -20,8 +20,8 @@
             app:cardCornerRadius="10dp"
             android:layout_centerVertical="true"
             android:id="@+id/card_view_image"
-            android:layout_width="130dp"
-            android:layout_height="130dp">
+            android:layout_width="130sp"
+            android:layout_height="130sp">
 
     <ImageView
         android:layout_centerVertical="true"
