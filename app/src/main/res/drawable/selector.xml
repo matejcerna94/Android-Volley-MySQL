@@ -2,11 +2,11 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
         <item
-            android:drawable="@color/colorPrimary"
+            android:drawable="@color/colorBlack"
             android:state_selected="true"/>
         <item
             android:text="@color/colorWhite"
-            android:drawable="@color/colorOrange"
+            android:drawable="@color/colorPrimary"
             android:state_selected="false"/>
 
 

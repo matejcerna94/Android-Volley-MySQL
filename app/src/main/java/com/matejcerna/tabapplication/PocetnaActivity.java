@@ -9,10 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.android.volley.Cache;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,7 +26,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +40,8 @@ public class PocetnaActivity extends AppCompatActivity {
     @Nullable
     @BindView(R.id.pager)
     ViewPager viewPager;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     // Fragment List
     private ArrayList<Category> categoryList = new ArrayList<>();
     // Title List
@@ -51,7 +51,6 @@ public class PocetnaActivity extends AppCompatActivity {
     String ime_kategorije;
     public static int position;
     public static String table_name;
-
 
 
     @Override
@@ -65,12 +64,11 @@ public class PocetnaActivity extends AppCompatActivity {
         table_id = Integer.parseInt(tablesList.get(position).getTable_id());
         table_name = tablesList.get(position).getTable_name();
         Log.d("KOD table id pocetna", String.valueOf(table_id));
-
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(table_name);
 
 
         fetchCategories();
-
-
 
 
     }

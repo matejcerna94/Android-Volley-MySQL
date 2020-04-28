@@ -271,8 +271,6 @@ public class FinishOrderActivity extends AppCompatActivity {
     public void onViewClicked() {
         showDialog();
         changeTableAvailability();
-        Intent intent = new Intent(FinishOrderActivity.this, TableActivity.class);
-        startActivity(intent);
     }
 
     private void showDialog() {
@@ -285,6 +283,8 @@ public class FinishOrderActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         deleteOrder();
+                        Intent intent = new Intent(FinishOrderActivity.this, TableActivity.class);
+                        startActivity(intent);
                     }
                 });
 
