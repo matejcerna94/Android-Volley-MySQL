@@ -169,7 +169,7 @@ public class ExampleDialog extends DialogFragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         date_and_time = simpleDateFormat.format(calendar.getTime());
         // formattedDate have current date/time
-        Toast.makeText(getContext(), date_and_time, Toast.LENGTH_SHORT).show();
+
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Saving");
 
@@ -179,17 +179,17 @@ public class ExampleDialog extends DialogFragment {
             @Override
             public void onResponse(String response) {
                 if (response.contains("success")) {
-                    Toast.makeText(getContext(), "Item saved!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Item saved!", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 } else {
-                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -212,7 +212,7 @@ public class ExampleDialog extends DialogFragment {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(request);
-
+        Toast.makeText(getContext(), "Order successfull!", Toast.LENGTH_SHORT).show();
     }
 
     private void changeTableAvailability() {
@@ -223,17 +223,17 @@ public class ExampleDialog extends DialogFragment {
             @Override
             public void onResponse(String response) {
                 if (response.contains("success")) {
-                    Toast.makeText(getContext(), "Item saved!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Item saved!", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
 
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

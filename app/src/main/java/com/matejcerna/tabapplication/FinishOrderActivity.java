@@ -345,6 +345,7 @@ public class FinishOrderActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+        Toast.makeText(this, "Order finished!", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -356,17 +357,17 @@ public class FinishOrderActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 if (response.contains("success")) {
-                    Toast.makeText(FinishOrderActivity.this, "Item saved!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(FinishOrderActivity.this, "Item saved!", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(FinishOrderActivity.this, response, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(FinishOrderActivity.this, response, Toast.LENGTH_SHORT).show();
 
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(FinishOrderActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(FinishOrderActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -381,6 +382,5 @@ public class FinishOrderActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
-
     }
 }
