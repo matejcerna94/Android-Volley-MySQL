@@ -1,9 +1,6 @@
 package com.matejcerna.tabapplication;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -81,7 +78,7 @@ public class RecyclerViewAdapterCategoryName extends RecyclerView.Adapter<Recycl
     }
 
     private void openDialog(String item_id, String item_name, String item_image, String item_price) {
-        ExampleDialog exampleDialog = new ExampleDialog();
+        OrderItemDialog exampleDialog = new OrderItemDialog();
         Bundle bundle = new Bundle();
         bundle.putString("item_id", item_id);
         bundle.putString("item_name", item_name);

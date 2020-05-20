@@ -4,24 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapterRoles extends RecyclerView.Adapter<RecyclerViewAdapterRoles.ViewHolder> {
     private Context context;
-    private ArrayList<Table> tablesList;
+    private ArrayList<Role> rolesList;
     private OnItemClickListener mlistener;
 
     public interface OnItemClickListener {
@@ -34,73 +32,54 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mlistener = listener;
     }
 
-    public RecyclerViewAdapter(Context context, ArrayList<Table> tablesList) {
+    public RecyclerViewAdapterRoles(Context context, ArrayList<Role> rolesList) {
         this.context = context;
-        this.tablesList = tablesList;
+        this.rolesList = rolesList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_content_tables, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_content_roles, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final Table currentTable = tablesList.get(position);
+        final Role currentRole = rolesList.get(position);
 
-        String tableName = currentTable.getTable_name();
-        String tableCapacity = currentTable.getTable_capacity();
-        String tableAvailability = currentTable.getTable_availability();
+        String roleName = currentRole.getRole_name();
 
 
-        holder.textViewTableName.setText(tableName);
-        holder.textViewTableCapacity.setText(tableCapacity);
-        Picasso.get().load(R.drawable.circular_table_green).fit().centerCrop().into(holder.imageViewTable);
-
-        if(tableAvailability.equals("No")){
-            Picasso.get().load(R.drawable.circular_table_red).fit().centerCrop().into(holder.imageViewTable);
-        }
-
-
-
-
+        holder.textViewRoleName.setText(roleName);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Table table = tablesList.get(position);
-                Intent intent = new Intent(context, PocetnaActivity.class);
+                Role role = rolesList.get(position);
+                String role_name = role.getRole_name();
+                if (role_name.equals("Waiter")){
+                    openWaiterLoginDialog();
+                }else{
+                    openChefLoginDialog();
+                }
+                /*Intent intent = new Intent(context, PocetnaActivity.class);
                 intent.putExtra("key_table_position", position);
-                context.startActivity(intent);
+                context.startActivity(intent);*/
             }
         });
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Intent intent = new Intent(context, LoginActivity.class);
-                intent.putExtra("key_table_position_finish_order", position);
-                context.startActivity(intent);
-                return false;
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        return tablesList.size();
+        return rolesList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.text_view_table_name)
-        TextView textViewTableName;
-        @BindView(R.id.text_view_table_capacity)
-        TextView textViewTableCapacity;
-        @BindView(R.id.image_view_table)
-        ImageView imageViewTable;
+        @BindView(R.id.text_view_role_name)
+        TextView textViewRoleName;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -119,5 +98,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             });
         }
+    }
+
+    private void openWaiterLoginDialog() {
+        WaiterLoginDialog waiterLoginDialog = new WaiterLoginDialog();
+        waiterLoginDialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "tag");
+    }
+
+    private void openChefLoginDialog() {
+        ChefLoginDialog chefLoginDialog = new ChefLoginDialog();
+        chefLoginDialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "tag");
     }
 }

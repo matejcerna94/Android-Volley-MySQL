@@ -12,7 +12,6 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,9 +35,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-public class ExampleDialog extends DialogFragment {
+public class OrderItemDialog extends DialogFragment {
 
 
     @BindView(R.id.item_name)
@@ -79,7 +77,7 @@ public class ExampleDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         AlertDialog alert = builder.create();
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.my_dialog, null);
+        View view = inflater.inflate(R.layout.order_item_dialog, null);
         ButterKnife.bind(this, view);
 
 

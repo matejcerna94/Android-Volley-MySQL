@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FinishOrderActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".FinishOrderActivity" />
         <activity android:name=".NarudzbaActivity" />
         <activity android:name=".TableActivity">
             <intent-filter>
@@ -23,7 +24,7 @@
         <activity
             android:name=".PocetnaActivity"
             android:label="@string/title_activity_pocetna"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
