@@ -59,9 +59,9 @@ public class RecyclerViewAdapterRoles extends RecyclerView.Adapter<RecyclerViewA
                 Role role = rolesList.get(position);
                 String role_name = role.getRole_name();
                 if (role_name.equals("Waiter")){
-                    openWaiterLoginDialog();
+                    openWaiterLoginDialog(role_name);
                 }else{
-                    openChefLoginDialog();
+                    openChefLoginDialog(role_name);
                 }
                 /*Intent intent = new Intent(context, PocetnaActivity.class);
                 intent.putExtra("key_table_position", position);
@@ -100,13 +100,19 @@ public class RecyclerViewAdapterRoles extends RecyclerView.Adapter<RecyclerViewA
         }
     }
 
-    private void openWaiterLoginDialog() {
+    private void openWaiterLoginDialog(String role_name) {
         WaiterLoginDialog waiterLoginDialog = new WaiterLoginDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("role_name", role_name);
+        waiterLoginDialog.setArguments(bundle);
         waiterLoginDialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "tag");
     }
 
-    private void openChefLoginDialog() {
+    private void openChefLoginDialog(String role_name) {
         ChefLoginDialog chefLoginDialog = new ChefLoginDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("role_name", role_name);
+        chefLoginDialog.setArguments(bundle);
         chefLoginDialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "tag");
     }
 }

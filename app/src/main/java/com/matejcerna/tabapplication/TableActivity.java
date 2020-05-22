@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TableActivity extends AppCompatActivity {
+    String staff_name;
     static ArrayList<Table> tablesList;
     @BindView(R.id.recycler_view_tables)
     RecyclerView recyclerViewTables;
@@ -41,6 +42,9 @@ public class TableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table);
         ButterKnife.bind(this);
+
+        staff_name = getIntent().getStringExtra("waiter_name");
+        getSupportActionBar().setTitle("Signed in as: " + staff_name);
 
         recyclerViewTables.setHasFixedSize(true);
         recyclerViewTables.setLayoutManager(new GridLayoutManager(this, 3));
