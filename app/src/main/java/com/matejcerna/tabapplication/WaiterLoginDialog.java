@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,12 +87,32 @@ public class WaiterLoginDialog extends DialogFragment {
     private void login(final String staff_name, final String staff_password) {
         String url = "https://low-pressure-lists.000webhostapp.com/login.php";
         final ProgressDialog progressDialog = ProgressDialog.show(getContext(), null, "Please wait");
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        final StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
                     Log.d("RESPONSE", response);
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(String.valueOf(response));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    String success = null;
+                    try {
+                        success = jsonObject.getString("success");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (success.equals("1")){
+                        Toast.makeText(getContext(), "Login successfull!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(), TableActivity.class);
+                        intent.putExtra("waiter_name", staff_name);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getContext(), "Wrong username or password!", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 GsonBuilder gsonBuilder = new GsonBuilder();
                 Gson gson = gsonBuilder.create();
@@ -151,9 +173,7 @@ public class WaiterLoginDialog extends DialogFragment {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(request);
-        Intent intent = new Intent(getContext(), TableActivity.class);
-        intent.putExtra("waiter_name", staff_name);
-        startActivity(intent);
+
     }
 
 
