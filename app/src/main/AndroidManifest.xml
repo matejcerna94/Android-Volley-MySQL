@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ChefActivity"></activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".TableActivity" />
         <activity android:name=".FinishOrderActivity" />
         <activity android:name=".NarudzbaActivity" />
-        <activity android:name=".TableActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

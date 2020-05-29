@@ -9,8 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,6 +44,9 @@ public class RecyclerViewAdapterRoles extends RecyclerView.Adapter<RecyclerViewA
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_content_roles, parent, false);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        layoutParams.height = (parent.getHeight() / 2) - layoutParams.topMargin - layoutParams.bottomMargin;
+        view.setLayoutParams(layoutParams);
         return new ViewHolder(view);
     }
 
@@ -52,6 +58,11 @@ public class RecyclerViewAdapterRoles extends RecyclerView.Adapter<RecyclerViewA
 
 
         holder.textViewRoleName.setText(roleName);
+        if (roleName.equals("Waiter")){
+            Picasso.get().load(R.drawable.waiter_icon_role).fit().centerCrop().into(holder.imageViewRole);
+        }else{
+            Picasso.get().load(R.drawable.chef_icon_role).fit().centerCrop().into(holder.imageViewRole);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +91,8 @@ public class RecyclerViewAdapterRoles extends RecyclerView.Adapter<RecyclerViewA
 
         @BindView(R.id.text_view_role_name)
         TextView textViewRoleName;
+        @BindView(R.id.image_view_role)
+        ImageView imageViewRole;
 
 
         public ViewHolder(@NonNull View itemView) {

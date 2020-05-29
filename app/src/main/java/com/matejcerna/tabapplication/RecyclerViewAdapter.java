@@ -43,6 +43,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_content_tables, parent, false);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        layoutParams.width = (parent.getWidth() / 3) - layoutParams.leftMargin - layoutParams.rightMargin;
+        view.setLayoutParams(layoutParams);
         return new ViewHolder(view);
     }
 
@@ -80,7 +83,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Intent intent = new Intent(context, LoginActivity.class);
+                Intent intent = new Intent(context, FinishOrderActivity.class);
                 intent.putExtra("key_table_position_finish_order", position);
                 context.startActivity(intent);
                 return false;
